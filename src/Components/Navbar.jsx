@@ -1,45 +1,114 @@
-import React, {useState} from 'react';
-import {AiOutlineClose, AiOutlineMenu} from 'react-icons/ai'
+import React, { useState } from 'react';
+import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 
-const Navbar = () => {
-    const [nav, setNav] = useState(false)
-    const handleNav = () => {
-      setNav (!nav)
-    }
+
+const Navbar = ({ setIsFormVisible, setIsLogin }) => {
+  const [nav, setNav] = useState(false); // State to toggle the sidebar
+
+  const handleNav = () => {
+    setNav(!nav); // Toggle sidebar state
+  };
+
   return (
-    <div className='flex justify-between items-center h-24 max-w-[1240px] mx-auto px-24 text-white bg-black'>
-   <h1 className="inline-block font-bold text-3xl ml-2">
-  <span className="text-white">Corn</span>
-  <span className="bg-orange-500 text-black p-2 rounded">hub</span>
-</h1>
+    <div className="flex justify-between items-center h-24 max-w-[1240px] mx-auto px-4 text-white bg-black">
+      {/* Logo */}
+      <h1 className="inline-block font-bold text-3xl ml-2">
+        <span className="text-white">Corn</span>
+        <span className="bg-orange-500 text-black p-2 rounded">hub</span>
+      </h1>
 
-
-      <ul className='flex hidden'>
-        <li className='p-5'>Home</li>
-        <li className='p-5'>Movies</li>
-        <li className='p-5'>Series</li>
-        <li className='p-5'>Cartoons</li>
-        <li className='p-5'>Anime</li>
-        <li className='p-5'>Contact Us</li>
-        <li className='p-5'>Login</li>
+      {/* Desktop Links */}
+      <ul className="hidden md:flex">
+        <li
+          className="p-5 cursor-pointer"
+          onClick={() => {
+            setIsFormVisible(true);
+            setIsLogin(true);
+          }}
+        >
+          Login
+        </li>
+        <li
+          className="p-5 cursor-pointer"
+          onClick={() => {
+            setIsFormVisible(true);
+            setIsLogin(false);
+          }}
+        >
+          Register
+        </li>
       </ul>
 
-       <div onClick={handleNav} className='block md'>
-        {!nav ? <AiOutlineClose size={20}/> : <AiOutlineMenu size={20} />}
+      {/* Mobile Menu Button */}
+      <div onClick={handleNav} className="block md:hidden cursor-pointer">
+        {nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}
+      </div>
 
-       </div>
-       <div className={!nav ? 'fixed left-0 top-0 w-[35%] h-full border-r border-r-gray-900 bg-[orange-800] ease-in-out duration-500': 'fixed left-[-100%]'}>
-        <ul className='pt-20  uppercase p-4'>
-
-        <li className='p-5 border-b border-b-gray-600'>Home</li>
-        <li className='p-5 border-b border-b-gray-600'>Movies</li>
-        <li className='p-5 border-b border-b-gray-600'>Series</li>
-        <li className='p-5 border-b border-b-gray-600'>Cartoons</li>
-        <li className='p-5 border-b border-b-gray-600'>Anime</li>
-        <li className='p-5 border-b border-b-gray-600'>Contact Us</li>
-        <li className='p-5'>Login</li>  
-         </ul>
-       </div>
+      {/* Mobile Sidebar */}
+      <div
+        className={`fixed top-0 left-0 w-[60%] h-full border-r border-gray-900 bg-gray-800 transition-transform duration-500 ease-in-out ${
+          nav ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        <ul className="uppercase p-8">
+          <li
+            className="p-5 border-b border-gray-600 cursor-pointer"
+            onClick={() => setNav(false)}
+          >
+            Home
+          </li>
+          <li
+            className="p-5 border-b border-gray-600 cursor-pointer"
+            onClick={() => setNav(false)}
+          >
+            Movies
+          </li>
+          <li
+            className="p-5 border-b border-gray-600 cursor-pointer"
+            onClick={() => setNav(false)}
+          >
+            Series
+          </li>
+          <li
+            className="p-5 border-b border-gray-600 cursor-pointer"
+            onClick={() => setNav(false)}
+          >
+            Cartoons
+          </li>
+          <li
+            className="p-5 border-b border-gray-600 cursor-pointer"
+            onClick={() => setNav(false)}
+          >
+            Anime
+          </li>
+          <li
+            className="p-5 border-b border-gray-600 cursor-pointer"
+            onClick={() => setNav(false)}
+          >
+            Contact Us
+          </li>
+          <li
+            className="p-5 cursor-pointer"
+            onClick={() => {
+              setIsFormVisible(true);
+              setIsLogin(true);
+              setNav(false);
+            }}
+          >
+            Login
+          </li>
+          <li
+            className="p-5 cursor-pointer"
+            onClick={() => {
+              setIsFormVisible(true);
+              setIsLogin(false);
+              setNav(false);
+            }}
+          >
+            Register
+          </li>
+        </ul>
+      </div>
     </div>
   );
 };

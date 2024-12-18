@@ -14,7 +14,7 @@
 }
 
 .App-Navbar {
-  background-color: #282c34;
+  background-color: #1c1c1c;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -35,4 +35,68 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 300px;
+  margin: auto;
+}
+
+label {
+  font-weight: bold;
+  color: #ccc;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}
+
+button {
+  padding: 10px;
+  background-color: #444;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #222;
+}
+
+/* Navbar Styles */
+.bg-gray-900 {
+  background-color: #1c1c1c;
+}
+
+.p-4 {
+  padding: 1rem;
+}
+
+.text-white {
+  color: white;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+/* Align buttons in the navbar */
+.flex {
+  display: flex;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.hover\\:underline:hover {
+  text-decoration: underline;
 }
