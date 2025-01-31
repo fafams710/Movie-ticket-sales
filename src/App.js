@@ -83,13 +83,13 @@ function App() {
         <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
         <div class="flex flex-col items-center justify-center w-full max-w-sm mx-auto">
     <div class="w-full h-64 bg-gray-300 bg-center bg-cover rounded-lg shadow-md" style={{
-  backgroundImage: 'url(/12.jpg)',
+  // backgroundImage: 'url(/12.jpg)',
   backgroundSize: 'cover',
   backgroundPosition: 'center', 
 }}></div>
 
     <div class="w-56 -mt-10 overflow-hidden bg-white rounded-lg shadow-lg md:w-64 dark:bg-gray-800">
-        <h3 class="py-2 font-bold tracking-wide text-center text-gray-800 uppercase dark:text-white">Salome Napahiyaw</h3>
+        <h3 class="py-2 font-bold tracking-wide text-center text-gray-800 uppercase dark:text-white">product title</h3>
 
         <div class="flex items-center justify-between px-3 py-2 bg-gray-200 dark:bg-gray-700">
             <span class="font-bold text-gray-800 dark:text-gray-200">$5 ticket</span>
@@ -100,13 +100,13 @@ function App() {
 
 <div class="flex flex-col items-center justify-center w-full max-w-sm mx-auto">
     <div class="w-full h-64 bg-gray-300 bg-center bg-cover rounded-lg shadow-md" style={{
-  backgroundImage: 'url(/OIP.jpg)',
+  // backgroundImage: 'url(/OIP.jpg)',
   backgroundSize: 'cover',
   backgroundPosition: 'center', 
 }}></div>
 
     <div class="w-56 -mt-10 overflow-hidden bg-white rounded-lg shadow-lg md:w-64 dark:bg-gray-800">
-        <h3 class="py-2 font-bold tracking-wide text-center text-gray-800 uppercase dark:text-white">Bugot kinalikot</h3>
+        <h3 class="py-2 font-bold tracking-wide text-center text-gray-800 uppercase dark:text-white">words here</h3>
 
         <div class="flex items-center justify-between px-3 py-2 bg-gray-200 dark:bg-gray-700">
             <span class="font-bold text-gray-800 dark:text-gray-200">$5 ticket</span>

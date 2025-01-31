@@ -13,8 +13,8 @@ const Navbar = ({ setIsFormVisible, setIsLogin }) => {
     <div className="flex justify-between items-center h-24 max-w-[1240px] mx-auto px-4 text-white bg-black">
       {/* Logo */}
       <h1 className="inline-block font-bold text-3xl ml-2">
-        <span className="text-white">Corn</span>
-        <span className="bg-orange-500 text-black p-2 rounded">hub</span>
+        <span className="text-white">Logo</span>
+        <span className="bg-white-500 text-black p-2 rounded">Here</span>
       </h1>
 
       {/* Desktop Links */}
