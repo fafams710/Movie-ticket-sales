@@ -1,4 +1,3 @@
-// Header.jsx
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
@@ -7,7 +6,7 @@ import LoginPage from '../pages/LoginPage';
 import Register from './Register'; // Import Register
 
 const Header = () => {
-    const { user, logoutUser  } = useContext(AuthContext);
+    const { user, logoutUser } = useContext(AuthContext);
     const [isMobileMenuActive, setIsMobileMenuActive] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isRegister, setIsRegister] = useState(false); // State to toggle between login and register
@@ -30,32 +29,44 @@ const Header = () => {
                 </h1>
             </div>
 
-            <div className="mobile-menu-icon" onClick={toggleMobileMenu}>
-                {isMobileMenuActive ? 'X' : '☰'}
+            {/* Mobile View: Hamburger Icon */}
+            <div className="mobile-menu-container">
+                <div className="mobile-menu-icon" onClick={toggleMobileMenu}>
+                    {isMobileMenuActive ? 'X' : '☰'}
+                </div>
+
+                {/* Mobile Menu Links */}
+                <div className={`mobile-navbar-links ${isMobileMenuActive ? 'active' : ''}`}>
+                    <ul>
+                        <li><Link to="/" className="nav-button">Home</Link></li>
+                        {user ? (
+                            <>
+                                <li><button onClick={logoutUser} className="nav-button">Logout</button></li>
+                                <li><p className="nav-button">Hello {user.username}!</p></li>
+                            </>
+                        ) : (
+                            <>
+                                <li><button onClick={() => openModal(false)} className="nav-button">Login</button></li>
+                                <li><button onClick={() => openModal(true)} className="nav-button">Register</button></li>
+                            </>
+                        )}
+                    </ul>
+                </div>
             </div>
 
-            <div className={`navbar-links ${isMobileMenuActive ? 'active' : ''}`}>
+            {/* Desktop View: Navbar Links */}
+            <div className="desktop-navbar-links">
                 <ul className="navbar-links">
-                    <li>
-                        <Link to="/" className="nav-button">Home</Link>
-                    </li>
+                    <li><Link to="/" className="nav-button">Home</Link></li>
                     {user ? (
                         <>
-                            <li>
-                                <button onClick={logoutUser } className="nav-button">Logout</button>
-                            </li>
-                            <li>
-                                <p className="nav-button">Hello {user.username}!</p>
-                            </li>
+                            <li><button onClick={logoutUser} className="nav-button">Logout</button></li>
+                            <li><p className="nav-button">Hello {user.username}!</p></li>
                         </>
                     ) : (
                         <>
-                            <li>
-                                <button onClick={() => openModal(false)} className="nav-button">Login</button>
-                            </li>
-                            <li>
-                                <button onClick={() => openModal(true)} className="nav-button">Register</button>
-                            </li>
+                            <li><button onClick={() => openModal(false)} className="nav-button">Login</button></li>
+                            <li><button onClick={() => openModal(true)} className="nav-button">Register</button></li>
                         </>
                     )}
                 </ul>

@@ -3,8 +3,8 @@ import React from 'react';
 
 const HomePage = () => {
   return (
-    <div className="min-h-screen bg-black text-white relative">
-      <section className="bg-white dark:bg-gray-900">
+    <div className="flex flex-col min-h-screen bg-black text-white">
+      <section className="flex-grow bg-white dark:bg-gray-900">
         <div className="container px-6 py-12 mx-auto">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             <div className="flex flex-col items-center justify-center w-full max-w-sm mx-auto">

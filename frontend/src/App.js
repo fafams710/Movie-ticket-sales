@@ -7,8 +7,8 @@ import LoginPage from './pages/LoginPage';
 import LoggedInPage from './pages/LoggedInPage';
 
 import Navbar from './components/Navbar';
-// import Footer from './componenets/Footer';
-import Register from './components/Register'; // Import the Register component
+import Footer from './components/Footer';
+import Register from './components/Register';
 
 import './components/Navbar.css';
 
@@ -26,7 +26,7 @@ function App() {
             <Route path="/register" element={<Register />} /> {/* Use the Register component */}
             <Route path="/profile" element={<PrivateRoute><LoggedInPage /></PrivateRoute>} />
           </Routes>
-          {/* <Footer /> */}
+          <Footer />
         </AuthProvider>
       </Router>
     </div>
