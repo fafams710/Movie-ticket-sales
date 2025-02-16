@@ -5,6 +5,7 @@ import { AuthProvider } from './context/AuthContext';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import LoggedInPage from './pages/LoggedInPage';
+import Homescreen from './pages/Homescreen';
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -25,6 +26,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<Register />} /> {/* Use the Register component */}
             <Route path="/profile" element={<PrivateRoute><LoggedInPage /></PrivateRoute>} />
+            <Route path="/homes" element={<Homescreen />} />
           </Routes>
           <Footer />
         </AuthProvider>

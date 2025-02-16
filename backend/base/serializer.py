@@ -1,7 +1,7 @@
 # serializers.py
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from base.models import Profile  # Assuming Profile is in base.models
+from base.models import Profile, Product  # Assuming Profile is in base.models
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -54,3 +54,8 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         })
 
         return user
+
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = '__all__'
