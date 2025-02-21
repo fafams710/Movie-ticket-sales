@@ -4,12 +4,14 @@ import AuthContext from '../context/AuthContext';
 import Modal from './Modal';
 import LoginPage from '../pages/LoginPage';
 import Register from './Register'; // Import Register
+import CartModal from './CartModal'; // Add CartModal import
 
 const Header = () => {
     const { user, logoutUser } = useContext(AuthContext);
     const [isMobileMenuActive, setIsMobileMenuActive] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isRegister, setIsRegister] = useState(false); // State to toggle between login and register
+    const [isCartModalOpen, setIsCartModalOpen] = useState(false); // State to handle Cart Modal visibility
 
     const toggleMobileMenu = () => {
         setIsMobileMenuActive(!isMobileMenuActive);
@@ -18,6 +20,11 @@ const Header = () => {
     const openModal = (isRegisterForm) => {
         setIsRegister(isRegisterForm);
         setIsModalOpen(true);
+    };
+
+    // Open cart modal
+    const openCartModal = () => {
+        setIsCartModalOpen(true);
     };
 
     return (
@@ -38,16 +45,16 @@ const Header = () => {
                 {/* Mobile Menu Links */}
                 <div className={`mobile-navbar-links ${isMobileMenuActive ? 'active' : ''}`}>
                     <ul>
-                        <li><Link to="/" className="nav-button">Home</Link></li>
+                        <li><Link to="/" className="nav-button"><i className="fas fa-home"></i> Home</Link></li>
                         {user ? (
                             <>
-                                <li><button onClick={logoutUser} className="nav-button">Logout</button></li>
+                                <li><button onClick={logoutUser} className="nav-button"><i className="fas fa-sign-out-alt"></i> Logout</button></li>
                                 <li><p className="nav-button">Hello {user.username}!</p></li>
                             </>
                         ) : (
                             <>
-                                <li><button onClick={() => openModal(false)} className="nav-button">Login</button></li>
-                                <li><button onClick={() => openModal(true)} className="nav-button">Register</button></li>
+                                <li><button onClick={() => openModal(false)} className="nav-button"><i className="fas fa-sign-in-alt"></i> Login</button></li>
+                                <li><button onClick={() => openModal(true)} className="nav-button"><i className="fas fa-user-plus"></i> Register</button></li>
                             </>
                         )}
                     </ul>
@@ -57,16 +64,17 @@ const Header = () => {
             {/* Desktop View: Navbar Links */}
             <div className="desktop-navbar-links">
                 <ul className="navbar-links">
-                    <li><Link to="/" className="nav-button">Home</Link></li>
+                    <li><Link to="/" className="nav-button"><i className="fas fa-home"></i> Home</Link></li>
                     {user ? (
                         <>
-                            <li><button onClick={logoutUser} className="nav-button">Logout</button></li>
+                            <li><button onClick={logoutUser} className="nav-button"><i className="fas fa-sign-out-alt"></i> Logout</button></li>
                             <li><p className="nav-button">Hello {user.username}!</p></li>
                         </>
                     ) : (
                         <>
-                            <li><button onClick={() => openModal(false)} className="nav-button">Login</button></li>
-                            <li><button onClick={() => openModal(true)} className="nav-button">Register</button></li>
+                            <li><button onClick={() => openModal(false)} className="nav-button"><i className="fas fa-sign-in-alt"></i> Login</button></li>
+                            <li><button onClick={() => openModal(true)} className="nav-button"><i className="fas fa-user-plus"></i> Register</button></li>
+                            <li><button onClick={openCartModal} className="nav-button"><i className="fas fa-shopping-cart"></i> Cart</button></li>
                         </>
                     )}
                 </ul>
@@ -80,6 +88,9 @@ const Header = () => {
                     <LoginPage onClose={() => setIsModalOpen(false)} openRegister={() => openModal(true)} />
                 )}
             </Modal>
+
+            {/* Cart Modal */}
+            <CartModal isOpen={isCartModalOpen} onClose={() => setIsCartModalOpen(false)} />
         </div>
     );
 };

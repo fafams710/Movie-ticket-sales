@@ -1,6 +1,7 @@
-// App.js
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 import { AuthProvider } from './context/AuthContext';
+import { CartProvider } from './context/CartContext'; // Import CartProvider
 
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
@@ -19,17 +20,20 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <AuthProvider>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<Register />} /> {/* Use the Register component */}
-            <Route path="/profile" element={<PrivateRoute><LoggedInPage /></PrivateRoute>} />
-            <Route path="/homes" element={<Homescreen />} />
-          </Routes>
-          <Footer />
-        </AuthProvider>
+        {/* Wrap the entire app with both AuthProvider and CartProvider */}
+        <CartProvider>
+          <AuthProvider>
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/profile" element={<PrivateRoute><LoggedInPage /></PrivateRoute>} />
+              <Route path="/homes" element={<Homescreen />} />
+            </Routes>
+            <Footer />
+          </AuthProvider>
+        </CartProvider>
       </Router>
     </div>
   );

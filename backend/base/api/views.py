@@ -1,6 +1,8 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
+from rest_framework import status
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -56,3 +58,22 @@ def getProduct(request, pk):
         return Response(serializer.data)
     except Product.DoesNotExist:
         return Response({"detail": "Product not found."}, status=404)
+
+
+class ProductUpdateView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def put(self, request, pk, *args, **kwargs):
+        try:
+            product = Product.objects.get(_id=pk)  # Get the product by ID
+        except Product.DoesNotExist:
+            return Response({"error": "Product not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        # Get updated stock from the request body
+        stock = request.data.get("stock")
+        if stock is not None:
+            product.stock = stock
+            product.save()
+            return Response(ProductSerializer(product).data, status=status.HTTP_200_OK)
+        else:
+            return Response({"error": "Stock value is required"}, status=status.HTTP_400_BAD_REQUEST)

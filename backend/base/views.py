@@ -1,2 +1,1 @@
-from django.shortcuts import JsonResponse
-
+from django.http import JsonResponse  # Correct import
