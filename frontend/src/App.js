@@ -25,11 +25,10 @@ function App() {
           <AuthProvider>
             <Navbar />
             <Routes>
-              <Route path="/" element={<HomePage />} />
+              <Route path="/" element={<Homescreen />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<Register />} />
               <Route path="/profile" element={<PrivateRoute><LoggedInPage /></PrivateRoute>} />
-              <Route path="/homes" element={<Homescreen />} />
             </Routes>
             <Footer />
           </AuthProvider>
