@@ -20,6 +20,8 @@ from tickets.views import TicketAvailabilityAPI, ReserveTicketsAPI
 from payments.views import CreatePaymentIntent, PaymentWebhookAPI
 from orders.views import CreateOrderAPI, OrderHistoryAPI
 from users.views import CustomTokenObtainPairView, RegisterView 
+from tickets.views import TicketTypeListView
+from tickets.views import ConcertsAPI
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,13 +31,14 @@ urlpatterns = [
     path('api/auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
         # Concerts
     path('api/concerts/', include('concerts.urls')),
-
+    path("api/concerts/<int:pk>/", ConcertsAPI.as_view(), name="concert-detail"),
     # Tickets
     path('api/tickets/availability/<int:concert_id>/', 
          TicketAvailabilityAPI.as_view(), name='ticket-availability'),
     path('api/tickets/reserve/', 
          ReserveTicketsAPI.as_view(), name='reserve-tickets'),
-
+    path('api/', include('tickets.urls')),
+    path("api/ticket-types/", TicketTypeListView.as_view(), name="ticket-type-list"),
     # Orders
     path('api/orders/', CreateOrderAPI.as_view(), name='create-order'),
     path('api/orders/history/', OrderHistoryAPI.as_view(), name='order-history'),
