@@ -19,7 +19,7 @@ const CartModal = () => {
 
   const handleProceedToPayment = () => {
     // Redirect to OrdersPage component
-    navigate('/orderspage'); // Ensure '/orders' is mapped to OrdersPage
+    navigate('/payment'); // Ensure '/orders' is mapped to OrdersPage
   };
 
   // If the modal is not open, show the "Open Cart" button

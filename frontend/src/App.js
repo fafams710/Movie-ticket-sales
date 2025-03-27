@@ -18,6 +18,8 @@ import './components/Navbar.css';
 
 import PrivateRoute from './utils/PrivateRoute';
 
+import OrderPageWrapper from './components/OrderPage';  // Import the OrderPageWrapper (UI component)
+
 function App() {
   return (
     <div className="App">
@@ -33,6 +35,7 @@ function App() {
               <Route path="/profile" element={<PrivateRoute><LoggedInPage /></PrivateRoute>} />
               <Route path="/cart" element={<CartModal />} /> {/* Route for Cart page */}
               <Route path="/orders" element={<OrdersPage />} /> {/* Route for Orders page */}
+              <Route path="/payment" element={<OrderPageWrapper />} /> {/* Route for Orders page */}
             </Routes>
             <Footer />
           </AuthProvider>
