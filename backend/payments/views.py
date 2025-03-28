@@ -6,6 +6,9 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from orders.models import Order
+from django.shortcuts import render
+from django.http import JsonResponse
+from .utils import send_ticket_email
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -62,3 +65,19 @@ class PaymentWebhookAPI(APIView):
                 return Response({'error': 'Order not found'}, status=404)
 
         return Response(status=200)
+
+def payment_success(request):
+    """Handles successful payments and sends a ticket email."""
+    # Example ticket info (replace with actual data from your system)
+    ticket_info = {
+        "user_name": request.user.get_full_name(),
+        "user_email": request.user.email,
+        "movie_name": "Dune: Part Two",
+        "seat_number": "A12",
+        "showtime": "March 30, 2025 - 7:00 PM"
+    }
+
+    # Send the email with the ticket and QR code
+    send_ticket_email(ticket_info["user_email"], ticket_info)
+
+    return JsonResponse({"message": "Payment successful! Ticket sent to email."})

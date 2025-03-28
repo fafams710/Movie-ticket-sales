@@ -1,24 +1,20 @@
-# serializers.py
 from rest_framework import serializers
-from django.contrib.auth.models import User
-from base.models import Profile, Product  # Assuming Profile is in base.models
+from django.contrib.auth import get_user_model
+from base.models import Profile, Product
+
+User = get_user_model()  # Ensure you're using CustomUser
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ('id', 'username', 'email', 'profile_number', 'phone')  # Include only necessary fields
 
 class ProfileSerializer(serializers.ModelSerializer):
-    user = UserSerializer(many=False, read_only=True)
+    user = UserSerializer(read_only=True)  # Prevent modifying user details from ProfileSerializer
 
     class Meta:
         model = Profile
-        fields = ('user', 'first_name', 'last_name', 'email')
-
-# base/serializer.py
-from rest_framework import serializers
-from django.contrib.auth.models import User
-from base.models import Profile  # Assuming Profile is in base.models
+        fields = ('user', 'first_name', 'last_name', 'email', 'phone')
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(required=True)
@@ -30,28 +26,32 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password')
 
-    def create(self, validated_data):
-        # Check if the user already exists
-        if User.objects.filter(username=validated_data['username']).exists():
-            raise serializers.ValidationError({"username": "This username is already taken."})
-        if User.objects.filter(email=validated_data['email']).exists():
-            raise serializers.ValidationError({"email": "This email is already registered."})
+    def validate_email(self, value):
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError("This email is already registered.")
+        return value
 
-        user = User(
+    def validate_username(self, value):
+        if User.objects.filter(username=value).exists():
+            raise serializers.ValidationError("This username is already taken.")
+        return value
+
+    def create(self, validated_data):
+        user = User.objects.create_user(
             username=validated_data['username'],
             email=validated_data['email'],
             first_name=validated_data['first_name'],
-            last_name=validated_data['last_name']
+            last_name=validated_data['last_name'],
+            password=validated_data['password'],  # Django handles password hashing
         )
-        user.set_password(validated_data['password'])  # Hash the password
-        user.save()
 
-        # Create a profile if it does not already exist
-        Profile.objects.get_or_create(user=user, defaults={
-            'first_name': validated_data['first_name'],
-            'last_name': validated_data['last_name'],
-            'email': validated_data['email']
-        })
+        # Create a profile for the user
+        Profile.objects.create(
+            user=user,
+            first_name=validated_data['first_name'],
+            last_name=validated_data['last_name'],
+            email=validated_data['email']
+        )
 
         return user
 

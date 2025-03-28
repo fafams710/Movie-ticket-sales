@@ -13,3 +13,8 @@ class ConcertSerializer(serializers.ModelSerializer):
     class Meta:
         model = Concert
         fields = ['id', 'title', 'image_url', 'date', 'venue', 'description', 'ticket_types']
+
+class TicketSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TicketType
+        fields = ['id', 'category', 'price', 'total_quantity', 'remaining_quantity']

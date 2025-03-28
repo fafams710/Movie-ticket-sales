@@ -42,6 +42,7 @@ urlpatterns = [
     # Orders
     path('api/orders/', CreateOrderAPI.as_view(), name='create-order'),
     path('api/orders/history/', OrderHistoryAPI.as_view(), name='order-history'),
+    path("api/users/", include("users.urls")),  # Include users app URLs
 
     # Payments
     path('api/payments/create-intent/', 

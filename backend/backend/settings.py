@@ -184,4 +184,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 STRIPE_SECRET_KEY = os.environ.get('pk_test_51R2z2aECWNnJTaVHowVR8tPrPbT5xuFe2Q0ma0UaGC77PNSJQ0cruFqjaZVe5REFCyKizVjCRXVJbnW60JhaYRSf00NOQcvQPWY', 'sk_test_51R2z2aECWNnJTaVHiWLEhwa9e9aSBKMqWuSgTVvfz5T2yiD1Zy5zWT4bAWbndIShIMLOEPe3RLODnsgqqvrOlTlG003dTaTe7bkey')
-AUTH_USER_MODEL = 'users.CustomUser'
+AUTH_USER_MODEL = 'base.CustomUser'
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "aparbo710@gmail.com"
+EMAIL_HOST_PASSWORD = "fafams123"
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

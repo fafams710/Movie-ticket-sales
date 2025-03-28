@@ -8,6 +8,7 @@ from datetime import timedelta
 from concerts.models import Concert
 from tickets.models import TicketType
 from .serializers import TicketTypeSerializer, ConcertSerializer
+from django.http import JsonResponse
 
 # List all TicketType objects
 class TicketTypeListView(ListAPIView):
@@ -69,5 +70,3 @@ class ConcertsAPI(APIView):
         concerts = Concert.objects.prefetch_related("ticket_types").all()
         serializer = ConcertSerializer(concerts, many=True, context={"request": request})
         return Response(serializer.data)
-
-
