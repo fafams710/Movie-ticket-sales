@@ -16,7 +16,7 @@ class Order(models.Model):
     quantity = models.PositiveIntegerField()
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
-    payment_intent_id = models.CharField(max_length=100)
+    payment_intent_id = models.CharField(max_length=100, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     qr_code = models.ImageField(upload_to='qrcodes/', null=True, blank=True)
 

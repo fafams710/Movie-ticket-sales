@@ -34,9 +34,39 @@ const AddToCartModal = ({ concertId, isOpen, onClose, addToCart }) => {
     }
   }, [isOpen, concertId, fetchAvailableTickets]);
 
+  // Function to send cart data to Django backend
+  const sendCartToBackend = async (ticket, quantity) => {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/cart/add/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ticket_id: ticket.id,
+          quantity: quantity,
+        }),
+      });
+
+      const data = await response.json();
+      console.log("Cart response:", data); // Debugging
+      if (response.ok) {
+        console.log("Ticket successfully added to cart");
+      } else {
+        console.error("Error adding to cart:", data);
+      }
+    } catch (error) {
+      console.error("Failed to send cart data:", error);
+    }
+  };
+
   const handleAddToCart = () => {
     if (!selectedTicket) return;
+
+    // Call both frontend and backend addToCart functions
     addToCart(selectedTicket, quantity);
+    sendCartToBackend(selectedTicket, quantity);
+
     onClose();
   };
 

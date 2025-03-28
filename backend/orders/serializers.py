@@ -5,22 +5,15 @@ from tickets.models import TicketType
 class TicketTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = TicketType
-        fields = ['id', 'category', 'price', 'total_quantity', 'remaining_quantity']  # Adjust fields as necessary
+        fields = ['id', 'category', 'price', 'total_quantity', 'remaining_quantity']
 
 class OrderSerializer(serializers.ModelSerializer):
-    # Nested serializer for ticket_type
-    ticket_type = TicketTypeSerializer(read_only=True)
+    ticket_type = TicketTypeSerializer(read_only=True)  # Nested serializer
 
     class Meta:
         model = Order
         fields = [
-            'id',
-            'ticket_type',  # Will display detailed ticket information
-            'quantity',
-            'total_price',
-            'status',
-            'payment_intent_id',
-            'qr_code',
-            'created_at'
+            'id', 'user', 'ticket_type', 'quantity', 'total_price', 
+            'status', 'payment_intent_id', 'qr_code', 'created_at'
         ]
         read_only_fields = ['total_price', 'status', 'created_at']
