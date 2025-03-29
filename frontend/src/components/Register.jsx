@@ -21,7 +21,7 @@ const Register = ({ onClose }) => { // Accept onClose prop
         const userData = { username, first_name: firstName, last_name: lastName, email, password };
 
         try {
-            const response = await fetch('http://https://movie-ticket-sales-dj-ca66216bdd9a.herokuapp.com//api/register/', {
+            const response = await fetch('https://movie-ticket-sales-dj-ca66216bdd9a.herokuapp.com/api/register/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
