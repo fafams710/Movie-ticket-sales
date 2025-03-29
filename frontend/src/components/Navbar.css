@@ -1,0 +1,85 @@
+/* Navbar Styling (Navbar.css) */
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: black;
+  position: relative;
+}
+
+.navbar-logo h1 {
+  font-size: 2rem;
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.nav-button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  text-decoration: none;
+}
+
+.nav-button:hover {
+  background-color: darkgray;
+}
+
+/* Mobile Menu Styling */
+.mobile-menu-container {
+  display: none; /* Hidden by default on large screens */
+}
+
+/* Mobile Navbar Links */
+.mobile-navbar-links {
+  display: none; /* Hidden by default */
+  position: absolute;
+  top: 80px; /* Adjust this based on your header height */
+  right: 0;
+  background-color: #34495e;
+  width: 100%;
+  flex-direction: column;
+  padding: 20px;
+  align-items: center; /* Center the links when active */
+}
+
+.mobile-navbar-links.active {
+  display: flex; /* Show when the 'active' class is added */
+}
+
+.mobile-menu-icon {
+  display: block;
+  cursor: pointer;
+  color: white;
+  font-size: 1.5rem;
+  position: absolute;
+  top: 20px; /* Place it at the top */
+  right: 20px; /* Align it to the right */
+}
+
+/* Desktop Navbar Links */
+.desktop-navbar-links {
+  display: flex;
+}
+
+@media (max-width: 768px) {
+  /* Show mobile menu icon and mobile navbar links on small screens */
+  .mobile-menu-container {
+      display: block; /* Show hamburger icon on small screens */
+  }
+
+  .desktop-navbar-links {
+      display: none; /* Hide the desktop links on small screens */
+  }
+}
