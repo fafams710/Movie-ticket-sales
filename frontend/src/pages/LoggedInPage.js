@@ -15,7 +15,7 @@ const LoggedInPage = () => {
   }, [authTokens, logoutUser]);
 
   const getProfile = async () => {
-    let response = await fetch('http://127.0.0.1:8000/api/profile', {
+    let response = await fetch('https://movie-ticket-sales-dj-ca66216bdd9a.herokuapp.com//api/profile', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

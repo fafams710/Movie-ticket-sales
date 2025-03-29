@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
         e.preventDefault(); // Prevent default form submission
         setErrorMessage(null); // Reset error message before login attempt
 
-        const response = await fetch('http://127.0.0.1:8000/api/token/', {
+        const response = await fetch('https://movie-ticket-sales-dj-ca66216bdd9a.herokuapp.com/api/token/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
     const updateToken = async () => {
         if (!authTokens) return; // Don't make a request if no tokens exist
 
-        const response = await fetch('http://127.0.0.1:8000/api/token/refresh/', {
+        const response = await fetch('https://movie-ticket-sales-dj-ca66216bdd9a.herokuapp.com//api/token/refresh/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

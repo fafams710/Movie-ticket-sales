@@ -11,7 +11,7 @@ const AddToCartModal = ({ concertId, isOpen, onClose, addToCart }) => {
     try {
       console.log(`Fetching tickets from /api/concerts/${concertId}/`);
       
-      const response = await fetch(`http://127.0.0.1:8000/api/concerts/${concertId}/`, {
+      const response = await fetch(`https://movie-ticket-sales-dj-ca66216bdd9a.herokuapp.com//api/concerts/${concertId}/`, {
         headers: { "Accept": "application/json" }, // Ensure JSON response
       });
 
@@ -37,7 +37,7 @@ const AddToCartModal = ({ concertId, isOpen, onClose, addToCart }) => {
   // Function to send cart data to Django backend
   const sendCartToBackend = async (ticket, quantity) => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/cart/add/", {
+      const response = await fetch("https://movie-ticket-sales-dj-ca66216bdd9a.herokuapp.com//api/cart/add/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
