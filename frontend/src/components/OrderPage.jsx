@@ -1,43 +1,52 @@
-import React from 'react';
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+// OrderPage.jsx
+import React, { useState } from 'react';
 
-const stripePromise = loadStripe('YOUR_STRIPE_PUBLISHABLE_KEY'); // Replace with your Stripe publishable key
-
-// OrderPage component
 const OrderPage = ({ order }) => {
-  const stripe = useStripe();
-  const elements = useElements();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   // Static order details, passed down as props
-  const ticketType = order.ticket_type; // e.g. Concert ticket
+  const ticketType = order.ticket_type.name; // e.g., Concert ticket
   const quantity = order.quantity;
   const totalPrice = order.total_price;
 
-  // Handle form submission (UI only)
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (!stripe || !elements) {
-      return;
-    }
+  // PayPal Order Creation
+  const createPayPalOrder = async () => {
+    setLoading(true);
+    setError(null);
 
-    const card = elements.getElement(CardElement);
-    const { error } = await stripe.createPaymentMethod({
-      type: 'card',
-      card: card,
-    });
+    try {
+      const response = await fetch('http://127.0.0.1:8000/payments/create-paypal-order/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount: totalPrice,
+        }),
+      });
 
-    if (error) {
-      console.log(error.message);
-    } else {
-      alert("Payment submitted successfully!");
+      if (!response.ok) {
+        throw new Error('Failed to create PayPal order.');
+      }
+
+      const data = await response.json();
+      if (data.id) {
+        // Redirect user to PayPal checkout
+        window.location.href = `https://www.sandbox.paypal.com/checkoutnow?token=${data.id}`;
+      }
+    } catch (error) {
+      setError('Error creating PayPal order.');
+      console.error('PayPal order error:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
   // Inline styles for the page
   const pageStyles = {
-    backgroundColor: '#f8f9fa', // Light background color
-    color: '#333', // Dark text color for contrast
+    backgroundColor: '#f8f9fa',
+    color: '#333',
     padding: '40px 20px',
     minHeight: '100vh',
     display: 'flex',
@@ -57,27 +66,8 @@ const OrderPage = ({ order }) => {
     maxWidth: '500px',
   };
 
-  // Form container styling
-  const formContainerStyles = {
-    backgroundColor: '#fff',
-    padding: '20px',
-    borderRadius: '8px',
-    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-    width: '100%',
-    maxWidth: '500px',
-  };
-
-  // Stripe CardElement container styling
-  const cardElementStyles = {
-    margin: '20px 0',
-    padding: '10px',
-    border: '1px solid #ddd',
-    borderRadius: '5px',
-    backgroundColor: '#f8f8f8',
-  };
-
-  // Submit button styling
-  const formButtonStyles = {
+  // PayPal button styling
+  const buttonStyles = {
     marginTop: '20px',
     padding: '12px 20px',
     backgroundColor: '#007bff',
@@ -90,7 +80,7 @@ const OrderPage = ({ order }) => {
   };
 
   // Hover effect for button
-  const formButtonHoverStyles = {
+  const buttonHoverStyles = {
     backgroundColor: '#0056b3',
   };
 
@@ -99,29 +89,23 @@ const OrderPage = ({ order }) => {
       <div style={orderSummaryStyles}>
         <h1>Order Summary</h1>
         <div>
-          <p><strong>Ticket Type:</strong> {ticketType.name}</p>
+          <p><strong>Ticket Type:</strong> {ticketType}</p>
           <p><strong>Quantity:</strong> {quantity}</p>
-          <p><strong>Total Price:</strong> ${totalPrice}</p>
+          <p><strong>Total Price:</strong> ₱{totalPrice}</p>
         </div>
       </div>
 
-      <div style={formContainerStyles}>
-        <h2>Payment Details</h2>
-        <form onSubmit={handleSubmit}>
-          <div style={cardElementStyles}>
-            <CardElement />
-          </div>
-          <button
-            type="submit"
-            disabled={!stripe}
-            style={formButtonStyles}
-            onMouseOver={(e) => (e.target.style.backgroundColor = formButtonHoverStyles.backgroundColor)}
-            onMouseOut={(e) => (e.target.style.backgroundColor = '#007bff')}
-          >
-            Pay Now
-          </button>
-        </form>
-      </div>
+      <button
+        onClick={createPayPalOrder}
+        disabled={loading}
+        style={buttonStyles}
+        onMouseOver={(e) => (e.target.style.backgroundColor = buttonHoverStyles.backgroundColor)}
+        onMouseOut={(e) => (e.target.style.backgroundColor = '#007bff')}
+      >
+        {loading ? 'Processing...' : 'Pay with PayPal'}
+      </button>
+
+      {error && <p style={{ color: 'red', marginTop: '10px' }}>{error}</p>}
     </div>
   );
 };
@@ -129,19 +113,15 @@ const OrderPage = ({ order }) => {
 // Example static order data for testing
 const order = {
   ticket_type: {
-    name: "Concert Ticket"
+    name: 'Concert Ticket',
   },
   quantity: 2,
-  total_price: 50.00, // Example price
+  total_price: 50.0, // Example price in PHP
 };
 
-// Wrapping OrderPage with Elements
+// Wrapping OrderPage with static order data
 const OrderPageWrapper = () => {
-  return (
-    <Elements stripe={stripePromise}>
-      <OrderPage order={order} />
-    </Elements>
-  );
+  return <OrderPage order={order} />;
 };
 
 export default OrderPageWrapper;
