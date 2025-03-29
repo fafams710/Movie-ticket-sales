@@ -18,7 +18,7 @@ function Homescreen() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const { data } = await axios.get('https://movie-ticket-sales-dj-ca66216bdd9a.herokuapp.com//api/products');
+        const { data } = await axios.get('https://movie-ticket-sales-dj-ca66216bdd9a.herokuapp.com/api/products');
         setProducts(data);
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -31,7 +31,7 @@ function Homescreen() {
   useEffect(() => {
     async function fetchConcerts() {
       try {
-        const { data } = await axios.get('https://movie-ticket-sales-dj-ca66216bdd9a.herokuapp.com//api/concerts');
+        const { data } = await axios.get('https://movie-ticket-sales-dj-ca66216bdd9a.herokuapp.com/api/concerts');
         setConcerts(data);
         setLoading(false);
       } catch (error) {
@@ -57,7 +57,7 @@ function Homescreen() {
     try {
       if (item.stock) {
         const updatedProduct = { ...item, stock: item.stock - quantity };
-        await axios.put(`https://movie-ticket-sales-dj-ca66216bdd9a.herokuapp.com//api/products/${item._id}/`, updatedProduct);
+        await axios.put(`https://movie-ticket-sales-dj-ca66216bdd9a.herokuapp.com/api/products/${item._id}/`, updatedProduct);
       }
       setSuccessMessage(`${item.title} added to cart!`);
       setTimeout(() => {

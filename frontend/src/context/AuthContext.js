@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
     const updateToken = async () => {
         if (!authTokens) return; // Don't make a request if no tokens exist
 
-        const response = await fetch('https://movie-ticket-sales-dj-ca66216bdd9a.herokuapp.com//api/token/refresh/', {
+        const response = await fetch('https://movie-ticket-sales-dj-ca66216bdd9a.herokuapp.com/api/token/refresh/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
